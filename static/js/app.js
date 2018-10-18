@@ -206,14 +206,11 @@ function initMap(viewModel) {
     center: models.centerLocation,
     zoom: 15,
     mapTypeControl: false,
-    zoomControl: true,
-    zoomControlOptions: {
-        position: google.maps.ControlPosition.LEFT_CENTER
-    },
+    zoomControl: false,
     scaleControl: true,
     streetViewControl: true,
     streetViewControlOptions: {
-        position: google.maps.ControlPosition.RIGHT_CENTER
+        position: google.maps.ControlPosition.BOTTOM_CENTER
     }
   });
   // From Google's Documentation
@@ -603,7 +600,8 @@ var viewModel = function() {
           infowindow.marker = marker;
           var innerHTML = '<div>';
           if (place.name) {
-            innerHTML += '<strong>'+ place.name +'</strong>';
+            innerHTML += '<h3 class="text-lobster clear-formatting"><strong>'
+            innerHTML += place.name +'</strong></h3>';
           }
           if (place.formatted_address) {
             innerHTML += '<br>'+ place.formatted_address;
@@ -615,7 +613,7 @@ var viewModel = function() {
             innerHTML += '<br><br><img src="'+ place.photos[0].getUrl(
               {maxHeight: 100, maxWidth: 200}) + '">';
           }
-          innerHTML += '</div>'
+          innerHTML += '</div><hr>'
           innerHTML += '<input type=\"button\" value=\"Get Directions\" onclick=' +
                       '\"vm.startDirections(&quot;' + place.formatted_address +
                       '&quot;);\"></input>';
@@ -626,6 +624,7 @@ var viewModel = function() {
                       '\"vm.renderCoordCurbs(&quot;' + place.formatted_address +
                       '&quot;);\"></input>';
           infowindow.setContent(innerHTML);
+          infowindow.setOptions({maxWidth:250});
           infowindow.open(map, marker);
           // make sure this marker property is cleared if the infowindow is closed
           infowindow.addListener('closeclick', function() {
