@@ -5,7 +5,36 @@ html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-size: 12px;
+  font-size: 16px;
+}
+
+/* Just use .gm-style-iw */
+.gm-style-iw {
+max-width: 600px;
+}
+
+@media only screen and (max-width: 801px)  {
+  .gm-style-iw {
+  max-width: 350px;
+  }
+}
+
+@media only screen and (max-width: 401px)  {
+  .gm-style-iw {
+  max-width: 250px;
+  }
+}
+
+@media only screen and (max-width: 361px)  {
+  .gm-style-iw {
+  max-width: 200px;
+  }
+}
+
+@media only screen and (max-width: 601px)  {
+  html, body {
+    font-size: 10px;
+  }
 }
 
 div, li, .text-comfortaa {
@@ -78,7 +107,7 @@ div, li, .text-comfortaa {
 
 button, input[type='button'] {
   width: inherit;
-  font-size: 10px;
+  font-size: 14px;
   border-radius: 6px;
   border: none;
   padding: 3px;
@@ -87,6 +116,12 @@ button, input[type='button'] {
   background-color: rgba(0,0,0,.5);
   color: white;
   font-family: Comfortaa;
+}
+
+@media only screen and (max-width: 601px)  {
+  button, input[type='button'] {
+    font-size: 9px;
+  }
 }
 
 .menu-container {

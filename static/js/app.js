@@ -624,7 +624,6 @@ var viewModel = function() {
                       '\"vm.renderCoordCurbs(&quot;' + place.formatted_address +
                       '&quot;);\"></input>';
           infowindow.setContent(innerHTML);
-          infowindow.setOptions({maxWidth:250});
           infowindow.open(map, marker);
           // make sure this marker property is cleared if the infowindow is closed
           infowindow.addListener('closeclick', function() {
