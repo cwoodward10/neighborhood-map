@@ -12,6 +12,10 @@ div, li, .text-comfortaa {
   font-family: Comfortaa;
 }
 
+.text-lobster {
+  font-family: Lobster;
+}
+
 #map-container {
   height:100vh;
   width: 100%;
@@ -55,6 +59,8 @@ div, li, .text-comfortaa {
   overflow-y: auto;
   overflow-x: hidden;
   font-family: Lobster;
+  border-style: solid;
+  border-width: 1px;
 }
 
 @media only screen and (max-width: 801px)  {
