@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <!-- styles put here, but you can include a CSS file and reference it instead! -->
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width,initial-scale=1.0">
+   <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="static/css/main.css">
+   <link rel="stylesheet" type="text/css" href="static/css/normalize.css">
+   <script type='text/javascript' src='static/js/lib/knockout-3.4.2.js'></script>
+   <title>Maps Project</title>
+ </head>
+ <body>
+
+   <div id='places' class='main-menu'>
+     <article class='menu-container'>
+       <p class='menu-title'>Places</p>
+       <button class='menu-button' data-bind='click: toggleMenuItem.bind($data, showPlaces)'>
+         <svg viewBox="0 0 10 10" class='menu-svg'>
+           <rect data-bind="visible: showPlaces()===false" height="6" width="1" y="2" x="4.5" />
+           <rect height="1" width="6" y="4.5" x="2" >
+         </svg>
+       </button>
+    </article>
+    <article data-bind="visible: showPlaces" class='menu-subcontainer'>
+      <hr>
+      <h3><button data-bind='click: toggleMyPlaces'>
+        <span data-bind='text: showMyPlaces() === false ? "Show" : "Hide"'>
+        </span> My Places</button>
+      </h3>
+      <section data-bind="visible: showMyPlaces">
+        <div>
+          <p>Filter Results:</p>
+          <select data-bind='options: placeFilterList,
+                             value: selectedFilter,
+                             optionsText: function(item) {
+                               return locationsPattern.exec(item)[1]
+                             },
+                             optionsCaption: "Filter by type of Place"'>
+          </select>
+        </div>
+        <ul data-bind="foreach: filteredPlaces">
+          <li class='pointer' data-bind="text: title, click: $parent.zoomToPosition.bind($data, position)"></li>
+        </ul>
+      </section>
+      <section data-bind="visible: !showMyPlaces()">
+        <h3>What are you looking for?</h3>
+        <div>
+          <input id='destination-places' type='text' placeholder='Destination'>
+          <input id='destination-places-go' class='submit' type="button" value='Go'>
+        </div>
+        <div>
+          <hr>
+          <p data-bind="visible: searchedPlaces().length > 0">You have no places yet.</p>
+          <ul data-bind="foreach: searchedPlaces">
+            <li class='pointer' data-bind="text: name, click: $parent.zoomToPosition.bind($data, geometry.location)"></li>
+          </ul>
+        </div>
+      </section>
+    </article>
+   </div>
+
+   <div id='routes' class='main-menu'>
+     <article class='menu-container'>
+       <button class='menu-button' data-bind='click: toggleMenuItem.bind($data, showRoutes)'>
+         <svg viewBox="0 0 10 10" class='menu-svg'>
+           <rect data-bind="visible: showRoutes()===false" height="6" width="1" y="2" x="4.5" />
+           <rect height="1" width="6" y="4.5" x="2" >
+         </svg>
+       </button>
+       <p class='menu-title'>Routes</p>
+     </article>
+     <article data-bind="visible: showRoutes" class='menu-subcontainer'>
+       <section>
+         <h3>Where are you going?</h3>
+         <div id='tmode-container' class='horz-container flex'>
+           <div id='tmode-DRIVING' class='tmode-button'
+            data-bind='click: setTravelMode.bind($data, "DRIVING"), css: {tActive: travelMode()==="DRIVING"}'></div>
+           <div id='tmode-TRANSIT' class='tmode-button'
+            data-bind='click: setTravelMode.bind($data, "TRANSIT"), css: {tActive: travelMode()==="TRANSIT"}'></div>
+           <div id='tmode-WALKING' class='tmode-button'
+            data-bind='click: setTravelMode.bind($data, "WALKING"), css: {tActive: travelMode()==="WALKING"}'></div>
+         </div>
+         <div>
+           <div class='horz-container flex'>
+             <div class='vert-container flex' style='width: 80%'>
+               <input id="get-route-origin" class='flex' type="text"
+                data-bind="textInput: routeOrigin">
+               <input id="get-route-destination" class='flex' type="text"
+                data-bind="textInput: routeDestination">
+             </div>
+             <div id='flip-route' data-bind='click: flipRoute'></div>
+           </div>
+           <input id ="get-route" class='submit' type="button" value="Get Route">
+           <button id='clear-routes'>Cancel</button>
+         </div>
+      <section>
+      <hr>
+      <section id='directionsPanel'>
+      </section>
+      <section data-bind="visible: transitRoutes().length>0">
+        <article data-bind='foreach: transitRoutes'>
+          <p>Route #<span data-bind='text: $parent.addOne($index)'></span></p>
+          <p>Trip Duration:
+            <span data-bind='text: $parent.convertDuration($data.statistics.duration_s)'>
+            </span>
+             minutes
+          </p>
+          <p>Trip Distance:
+            <span data-bind='text: $parent.toMiles($data.statistics.distance_km)'>
+            </span>
+             miles
+          </p>
+          <div data-bind='foreach: $data.legs'>
+            <div>
+              <p>Mode:
+                <span data-bind='text: $data.mode'></span>
+              </p>
+              <p>Mode:
+                <span data-bind='text: $parents[1].convertDuration($data.statistics.duration_s)'></span>
+                 minutes
+              </p>
+              <p>
+                <span data-bind='text: $parents[1].toMiles($data.statistics.distance_km)'></span>
+                 miles
+              </p>
+            <div>
+          </div>
+        </article>
+      </section>
+     </article>
+   </div>
+
+   <div id='curbs' class='main-menu'>
+     <article data-bind="visible: showCurbs" class='menu-subcontainer'>
+       <h3><button data-bind='click: toggleCurbs'>
+         <span data-bind='text: renderCurbs() === false ? "Show" : "Hide"'></span> Curbs</button>
+       </h3>
+       <div data-bind="visible: renderCurbs">
+         <h4>Legend</h4>
+         <article class='flex vert-container'>
+           <div class='flex horz-container'>
+             <svg viewBox="0 0 10 10" class='curb-legend-color flex'
+              data-bind="style: { fill: noneColor}">
+               <rect height="3" width="10" y="5" x="2" >
+             </svg>
+             <p class='flex clear-formatting'>No Parking</p>
+           </div>
+           <div class='flex horz-container'>
+             <svg viewBox="0 0 10 10" class='curb-legend-color flex'
+              data-bind="style: { fill: parkingColor}">
+               <rect height="3" width="10" y="5" x="2" >
+             </svg>
+             <p class='flex clear-formatting'>Parking Allowed</p>
+           </div>
+           <div class='flex horz-container'>
+             <svg viewBox="0 0 10 10" class='curb-legend-color flex'
+              data-bind="style: { fill: loadPassengersColor}">
+               <rect height="3" width="10" y="5" x="2" >
+             </svg>
+             <p class='flex clear-formatting'>Passenger Loading Zone</p>
+           </div>
+           <div class='flex horz-container'>
+             <svg viewBox="0 0 10 10" class='curb-legend-color flex'
+              data-bind="style: { fill: loadGoodsColor}">
+               <rect height="3" width="10" y="5" x="2" >
+             </svg>
+             <p class='flex clear-formatting'>Commercial Loading Zone</p>
+           </div>
+         </article>
+       </div>
+     </article>
+     <article class='menu-container'>
+       <p class='menu-title'>Curbs</p>
+       <button class='menu-button' data-bind='click: toggleMenuItem.bind($data, showCurbs)'>
+         <svg viewBox="0 0 10 10" class='menu-svg'>
+           <rect data-bind="visible: showCurbs()===false" height="6" width="1" y="2" x="4.5" />
+           <rect height="1" width="6" y="4.5" x="2" >
+         </svg>
+       </button>
+    </article>
+   </div>
+
+   <div id='about' class='main-menu'>
+     <article data-bind="visible: showAbout" class='menu-subcontainer'>
+       <p>Now you see me?<p>
+     </article>
+     <article class='menu-container'>
+       <button class='menu-button' data-bind='click: toggleMenuItem.bind($data, showAbout)'>
+         <svg viewBox="0 0 10 10" class='menu-svg'>
+           <rect data-bind="visible: showAbout()===false" height="6" width="1" y="2" x="4.5" />
+           <rect height="1" width="6" y="4.5" x="2" >
+         </svg>
+       </button>
+       <p class='menu-title'>About</p>
+     </article>
+   </div>
+
+   <div id='map-container'>
+     <div id="map"></div>
+   </div>
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <script
+     src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyBNYCHzJ_8tiNaGoupPe3A8GTeYLcTwe7E&v=3">
+   </script>
+   <script src="static/js/app.js"></script>
+
+ </body>
+</html>

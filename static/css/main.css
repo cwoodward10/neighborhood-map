@@ -1,0 +1,209 @@
+html, body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+
+#map-container {
+  height:100vh;
+  width: 100%;
+  display: flex;
+}
+
+#map {
+  display: flex;
+  width: 100%;
+  padding: 5px;
+  margin: 10px;
+  border-style: double;
+  border-width: 10px;
+  min-height: 0;
+}
+
+.flex {
+  display: flex;
+}
+
+.clear-formatting {
+  margin: 0;
+  padding: 0;
+}
+
+.main-menu {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: .25em 1.5em;
+  align-items: center;
+  justify-content: space-between;
+  height: fit-content;
+  width: fit-content;
+  border-radius: 10px;
+  background-color: white;
+  z-index: 10;
+  max-width: 30%;
+  max-height: 75%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+@media only screen and (max-width: 801px)  {
+  .main-menu {
+    max-width: 45%;
+  }
+}
+
+@media only screen and (max-width: 401px)  {
+  .main-menu {
+    max-width: 80%;
+  }
+}
+
+
+button, input[type='button'] {
+  width: inherit;
+  font-size: 10px;
+  border-radius: 6px;
+  border: none;
+  padding: 3px;
+  text-align: center;
+  text-decoration: none;
+  background-color: rgba(0,0,0,.5);
+  color: white;
+}
+
+.menu-container {
+  display: flex;
+}
+
+.menu-title {
+  position: static;
+  display: flex;
+  margin: 0;
+  font-size: 1.5em;
+  font-family: Karla;
+  font-weight: bold;
+  width: fit-content;
+  justify-content: space-between;
+}
+
+.menu-button {
+  all: inherit;
+  padding: 0;
+  position: static;
+  background-color: none;
+  border-style: none;
+  display: flex;
+}
+
+.menu-svg {
+  position: static;
+  align-items: center;
+  justify-content: center;
+  height: 2em;
+  width: 2em;
+}
+
+.menu-subcontainer {
+  margin-left, margin-right: inherit;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.pointer:hover {
+  cursor: pointer;
+}
+
+#places {
+  top: 25px;
+  left: 25px;
+}
+
+#routes {
+  top: 25px;
+  right: 25px;
+}
+
+#curbs {
+  bottom: 25px;
+  left: 25px;
+}
+
+#about {
+  bottom: 25px;
+  right: 25px;
+}
+
+#flip-route {
+  display: block;
+  background-image: url(https://maps.gstatic.com/tactile/directions/omnibox/directions-1x-20180521.png);
+  background-size: 96px 240px;
+  height: 24px;
+  width: 22px;
+  background-position: -1px -24px;
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  border-radius: 11px;
+  margin: 5px;
+}
+
+.vert-container {
+  flex-direction: column;
+}
+
+.horz-container {
+  flex-direction: row;
+}
+
+#tmode-container {
+  width: 50%;
+  justify-content: space-around;
+}
+
+.tmode-button {
+  display: flex;
+  background-image: url(https://maps.gstatic.com/tactile/directions/omnibox/directions-1x-20180521.png);
+  background-size: 96px 240px;
+  background-position: -1px -24px;
+  height: 24px;
+  width: 22px;
+  margin: 3px;
+  cursor: pointer;
+}
+
+#tmode-DRIVING {
+  background-position: -1px -96px;
+  opacity: .5;
+}
+
+#tmode-DRIVING.tActive {
+  background-position: -1px -96px;
+  opacity: 1;
+}
+
+#tmode-TRANSIT {
+  background-position: -1px -120px;
+  opacity: .5;
+}
+
+#tmode-TRANSIT.tActive {
+  background-position: -1px -120px;
+  opacity: 1;
+}
+
+#tmode-WALKING {
+  background-position: -1px -144px;
+  opacity: .5;
+}
+
+#tmode-WALKING.tActive {
+  opacity: 1;
+}
+
+.curb-legend-color {
+  width: 2em;
+  height: 1em;
+}
