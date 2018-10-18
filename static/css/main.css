@@ -1,9 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Comfortaa|Lobster');
+
 html, body {
   height: 100vh;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-size: 12px;
+}
+
+div, li, .text-comfortaa {
+  font-family: Comfortaa;
 }
 
 #map-container {
@@ -48,6 +54,7 @@ html, body {
   max-height: 75%;
   overflow-y: auto;
   overflow-x: hidden;
+  font-family: Lobster;
 }
 
 @media only screen and (max-width: 801px)  {
@@ -58,7 +65,7 @@ html, body {
 
 @media only screen and (max-width: 401px)  {
   .main-menu {
-    max-width: 80%;
+    max-width: 75%;
   }
 }
 
@@ -73,6 +80,7 @@ button, input[type='button'] {
   text-decoration: none;
   background-color: rgba(0,0,0,.5);
   color: white;
+  font-family: Comfortaa;
 }
 
 .menu-container {
@@ -84,7 +92,7 @@ button, input[type='button'] {
   display: flex;
   margin: 0;
   font-size: 1.5em;
-  font-family: Karla;
+  font-family: Lobster;
   font-weight: bold;
   width: fit-content;
   justify-content: space-between;

@@ -5,8 +5,8 @@
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width,initial-scale=1.0">
    <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
-   <link rel="stylesheet" type="text/css" href="static/css/main.css">
    <link rel="stylesheet" type="text/css" href="static/css/normalize.css">
+   <link rel="stylesheet" type="text/css" href="static/css/main.css">
    <script type='text/javascript' src='static/js/lib/knockout-3.4.2.js'></script>
    <title>Maps Project</title>
  </head>
@@ -83,7 +83,7 @@
          </div>
          <div>
            <div class='horz-container flex'>
-             <div class='vert-container flex' style='width: 80%'>
+             <div class='vert-container flex'>
                <input id="get-route-origin" class='flex' type="text"
                 data-bind="textInput: routeOrigin">
                <input id="get-route-destination" class='flex' type="text"
@@ -183,7 +183,33 @@
 
    <div id='about' class='main-menu'>
      <article data-bind="visible: showAbout" class='menu-subcontainer'>
-       <p>Now you see me?<p>
+       <h3>A little background on this project</h3>
+       <p class='text-comfortaa'>
+         This app seems to have been designed as an exercise in exploring javascript
+         and how it can be combined with various APIs to produce a cool app.
+
+         The idea seems to be that we ought pick some city and locate some points of
+         interest in that city so that others can see what is going on.
+
+         I took a little bit of a different approach but hopefully still satisfy the
+         main requirements of the app.
+
+         As an architectural designer, I am quite interested in urban environments and
+         APIs that cater to those environments. A couple such APIs, built by a subsidiary of
+         of company that I quite admire - Sidewalk Labs which is itself a spin off from
+         Alphabet - are the Routing and Curbs APIs by Coord. Coord is a company that
+         is looking to simplify the various transportation related information networks
+         that are in use in our cities today. The Routing API is an API that is similar
+         to Google Maps' Directions API except that it compiles a multi-modal route thus
+         giving someone a clear sense of what transportation options are available. The
+         Curbs API is meant to give someone a snapshot of the rules governing the curbs
+         of various parts of the city. Perhaps most useful to the average person is
+         locating where potential parking spots are.
+
+         I chose San Francisco as the "neighborhood" for this application because it
+         supported both of the APIs that Coord provides. The APIs are not yet supported
+         in every city unfortunately.
+       </p>
      </article>
      <article class='menu-container'>
        <button class='menu-button' data-bind='click: toggleMenuItem.bind($data, showAbout)'>
