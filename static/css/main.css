@@ -8,7 +8,7 @@ html, body {
   font-size: 16px;
 }
 
-/* Just use .gm-style-iw */
+/* thanks to this guy at https://katz.co/6459/ */
 .gm-style-iw {
 max-width: 600px;
 }
