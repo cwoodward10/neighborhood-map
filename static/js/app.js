@@ -423,7 +423,6 @@ var viewModel = function() {
         }, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
             let coords = results[0].geometry.location;
-            console.log(coords.lat(), coords.lng());
             resolve(coords)
           } else {
             reject(status);
@@ -434,7 +433,6 @@ var viewModel = function() {
   };
 
   self.returnLatLng  = function(address) {
-    console.log('running address: ' + address);
     var geocoder = new google.maps.Geocoder();
     if (address === '') {
       window.alert('You must enter an area or address.')
@@ -445,7 +443,6 @@ var viewModel = function() {
         }, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
             let coords = results[0].geometry.location;
-            console.log(coords.lat(), coords.lng());
             return coords
           } else {
             window.alert('We could not find that location');
@@ -505,7 +502,7 @@ var viewModel = function() {
     }
   };
 
-  // hides a set of markers
+  // hides a set of polylines
   self.hidePolylines = function(polylines) {
     for (var i = 0; i < polylines.length; i++) {
       polylines[i].setMap(null);
@@ -684,7 +681,6 @@ var viewModel = function() {
 
   self.createMarkerFromPlaceRequest = function(place) {
     return new Promise(function(resolve, reject) {
-      console.log(place);
       var service = new google.maps.places.PlacesService(map);
       var request = {
         query: place,
@@ -972,10 +968,10 @@ var viewModel = function() {
     return new Promise(function(resolve, reject) {
       let time = new Date()
 
-      var minLat = self.mapBounds().f.b;
-      var maxLat = self.mapBounds().f.f;
-      var minLng = self.mapBounds().b.b;
-      var maxLng = self.mapBounds().b.f;
+      var minLat = self.mapBounds().l.j;
+      var maxLat = self.mapBounds().l.l;
+      var minLng = self.mapBounds().j.l;
+      var maxLng = self.mapBounds().j.j;
 
       var coordURL = 'https://api.coord.co/v1/search/curbs/bybounds/time_rules?min_latitude=';
       coordURL += minLat;
@@ -1009,7 +1005,6 @@ var viewModel = function() {
     coordURL += '&time=' + time.toISOString();
     coordURL += '&vehicle_type=all&access_key='
     coordURL += coordKey;
-    console.log(coordURL);
     return coordURL
   };
 
@@ -1074,6 +1069,7 @@ var viewModel = function() {
         curb.properties.uses.use
       );
       poly.setMap(map);
+      console.log(poly);
       self.curbPolylines().push(poly);
     });
   }
@@ -1087,12 +1083,13 @@ var viewModel = function() {
     var curbs = '';
     if (type === 'ALL') {
       self.promiseAllCurbs().then(function(result) {
+        console.log('render all');
         curbs = result.features;
+        console.log(result);
         self.iterateCurbs(curbs);
       });
     } else {
       self.promiseLatLng(type).then(function(result) {
-        console.log(result);
         return self.promiseRadiusCurbs(result)
       }).then(function(result) {
         curbs = result.features;
